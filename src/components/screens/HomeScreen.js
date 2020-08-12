@@ -19,35 +19,23 @@ const HomeScreen = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [selectedTab, setSelectedTab] = useState(tabList[0]);
-
-  useEffect(() => {
-    fetch('https://itunes.apple.com/search?term=Michael+jackson')
-      .then((response) => response.text())
-      .then((textString) => {
-        setData(JSON.parse(textString).results);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
-
+  const gestureConfig = {
+    velocityThreshold: 0.1,
+    directionalOffsetThreshold: 100,
+    gestureIsClickThreshold: 5,
+  };
   const onSwipeLeft = () => {
     let currentIndex = tabList.indexOf(selectedTab);
     if (currentIndex !== 0) {
       setSelectedTab(tabList[currentIndex - 1]);
-    } else {
-      setSelectedTab(tabList[tabList.length - 1]);
     }
   };
-
   const onSwipeRight = () => {
     let currentIndex = tabList.indexOf(selectedTab);
     if (currentIndex !== tabList.length - 1) {
       setSelectedTab(tabList[currentIndex + 1]);
-    } else {
-      setSelectedTab(tabList[0]);
     }
   };
-
   const getListData = () => {
     switch (selectedTab) {
       case 'Popular':
@@ -61,29 +49,15 @@ const HomeScreen = (props) => {
     }
   };
 
-  const renderListItem = (item) => (
-    <TouchableOpacity
-      style={styles.itemContainer}
-      onPress={() => props.navigation.navigate('song', {song: item})}>
-      <View style={styles.itemImageContainer}>
-        <Image style={styles.itemImage} source={{uri: item.artworkUrl100}} />
-      </View>
-      <View style={styles.itemDetailsContainer}>
-        <Text style={styles.itemMainText}>{item.trackName}</Text>
-        <Text style={styles.itemSubText}>{item.artistName}</Text>
-      </View>
-      <View style={styles.itemDurationContainer}>
-        <Text style={styles.itemDurationText} />
-        <Text style={styles.itemDurationText}>
-          {`${Math.floor(item.trackTimeMillis / 60000)}:${(
-            item.trackTimeMillis - Math.floor(item.trackTimeMillis / 60000)
-          )
-            .toString()
-            .slice(0, 2)}`}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+  useEffect(() => {
+    fetch('https://itunes.apple.com/search?term=Michael+jackson')
+      .then((response) => response.text())
+      .then((textString) => {
+        setData(JSON.parse(textString).results);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
 
   const renderTabs = () =>
     tabList.map((tab) => (
@@ -97,6 +71,7 @@ const HomeScreen = (props) => {
           ]}
           onPress={() => setSelectedTab(tab)}>
           <Text
+            adjustsFontSizeToFit={true}
             style={[
               styles.tabText,
               {
@@ -119,21 +94,42 @@ const HomeScreen = (props) => {
       </View>
     ));
 
-  const config = {
-    velocityThreshold: 0.3,
-    directionalOffsetThreshold: 80,
-  };
+  const renderListItem = (item) => (
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => props.navigation.navigate('song', {song: item})}>
+      <View style={styles.itemImageContainer}>
+        <Image style={styles.itemImage} source={{uri: item.artworkUrl100}} />
+      </View>
+      <View style={styles.itemDetailsContainer}>
+        <Text style={styles.itemMainText}>{item.trackName}</Text>
+        <Text style={styles.itemSubText}>{item.artistName}</Text>
+      </View>
+      <View style={styles.itemDurationContainer}>
+        <Text adjustsFontSizeToFit={true} style={styles.itemDurationText} />
+        <Text adjustsFontSizeToFit={true} style={styles.itemDurationText}>
+          {`${Math.floor(item.trackTimeMillis / 60000)}:${(
+            item.trackTimeMillis - Math.floor(item.trackTimeMillis / 60000)
+          )
+            .toString()
+            .slice(0, 2)}`}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <CommonRoot>
       <View style={styles.headerContainer}>
-        <Text>Music</Text>
+        <Text adjustsFontSizeToFit={true} style={styles.headerText}>
+          Music
+        </Text>
       </View>
       <View style={styles.tabContainer}>{renderTabs()}</View>
       <GestureRecognizer
         onSwipeLeft={() => onSwipeLeft()}
         onSwipeRight={() => onSwipeRight()}
-        config={config}
+        config={gestureConfig}
         style={styles.listContainer}>
         {isLoading ? (
           <ActivityIndicator />

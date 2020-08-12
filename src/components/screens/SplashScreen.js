@@ -1,28 +1,25 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {Image} from 'react-native';
 
 import CommonRoot from '../shared/CommonRoot';
 import {splashStyles as styles} from '../styles/styles';
 
-export default class SplashScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.props.navigation.navigate('home');
+const SplashScreen = (props) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      props.navigation.navigate('home');
     }, 2000);
-  }
+    return () => clearTimeout(timer);
+  }, [props]);
 
-  render() {
-    return (
-      <CommonRoot>
-        <Image
-          style={styles.splashImage}
-          source={require('../../assets/images/splash.png')}
-        />
-      </CommonRoot>
-    );
-  }
-}
+  return (
+    <CommonRoot>
+      <Image
+        style={styles.splashImage}
+        source={require('../../assets/images/splash.png')}
+      />
+    </CommonRoot>
+  );
+};
+
+export default SplashScreen;

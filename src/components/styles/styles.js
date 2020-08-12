@@ -38,6 +38,9 @@ export const splashStyles = StyleSheet.create({
 
 export const homeStyles = StyleSheet.create({
   ...commonStyles,
+  headerText: {
+    fontSize: fullHeight * 0.02,
+  },
   tabContainer: {
     flex: 0.075,
     flexDirection: 'row',
