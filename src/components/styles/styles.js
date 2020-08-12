@@ -3,13 +3,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-const tabList = ['Popular', 'Recent', 'Most Played'];
 
+const tabList = ['Popular', 'Recent', 'Most Played'];
 const fullHeight = hp('100%');
 const fullWidth = wp('100%');
 
-const styles = StyleSheet.create({
-  // common styles
+export const commonStyles = StyleSheet.create({
   safeContainer: {
     flex: 1,
     alignItems: 'center',
@@ -28,12 +27,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  // splash screen
+});
+
+export const splashStyles = StyleSheet.create({
   splashImage: {
     width: fullWidth * 0.8,
     resizeMode: 'contain',
   },
-  // home screen
+});
+
+export const homeStyles = StyleSheet.create({
+  ...commonStyles,
   tabContainer: {
     flex: 0.075,
     flexDirection: 'row',
@@ -104,13 +108,51 @@ const styles = StyleSheet.create({
   },
   itemMainText: {
     color: 'black',
+    fontSize: fullHeight * 0.0175,
+    fontWeight: 'bold',
   },
   itemSubText: {
     color: 'grey',
+    fontSize: fullHeight * 0.015,
   },
   itemDurationText: {
     color: 'grey',
+    fontSize: fullHeight * 0.015,
   },
 });
 
-export default styles;
+export const songStyles = StyleSheet.create({
+  songImageContainer: {
+    flex: 0.5,
+    width: fullWidth,
+  },
+  playerContainer: {
+    flex: 0.5,
+    width: fullWidth,
+  },
+  songDetailsContainer: {
+    flex: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  trackNameText: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: fullHeight * 0.03,
+  },
+  albumNameText: {color: 'grey', fontSize: fullHeight * 0.02},
+  controlsContainer: {
+    flex: 0.5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  controlButton: {
+    height: fullHeight * 0.05,
+    width: fullHeight * 0.05,
+  },
+  playButton: {
+    height: fullHeight * 0.075,
+    width: fullHeight * 0.075,
+  },
+});
