@@ -8,6 +8,7 @@ target 'iTunes' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
   target 'iTunesTests' do
     inherit! :complete
     # Pods for testing

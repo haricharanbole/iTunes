@@ -194,7 +194,6 @@
 				304236C97C8CBC463B726FA3 /* Pods-iTunes-tvOSTests.debug.xcconfig */,
 				DE2C7B3FD4BE03F686943976 /* Pods-iTunes-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
