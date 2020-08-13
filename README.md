@@ -18,4 +18,6 @@ Open a new terminal window and run following.
 
 Please make sure you have suitable environment setup to run react native applications for the platform you need.
 
+## App Preview in Android Phone
+
 ![](preview.gif)
